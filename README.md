@@ -1,17 +1,18 @@
 # TypeORM-Configuration
 
 # Tabela de conteúdos
-* [Configurando TypeORM](#ancora1)
-* [Exemplo de migration de criação](#ancora2)
-
-
-<a id="#ancora1"></a>
+  * [Configurando TypeORM](#ancora1)
+  * [Exemplo de migration de criação](#ancora2)
+  * [Commandos de typeorm para migrations](#ancora3)
+  * [Configurando Models](#ancora4)
+  
+<a id="ancora1"></a>
 # Configurando TypeORM
 
 #### Instale as dependencias
 
 ```
-yarn add typeorm pg
+yarn add typeorm pg reflect-metadata
 ```
 
 #### Configuração do ```ormconfig.json``` para postgress
@@ -24,6 +25,9 @@ yarn add typeorm pg
   "username": "postgres",
   "password": "docker",
   "database": "gostack_gobarber",
+  "entities": [
+    "./src/models/*.ts"
+  ],
   "migrations": [
     "./src/database/migrations/*.ts"
   ],
@@ -31,7 +35,6 @@ yarn add typeorm pg
     "migrationsDir": "./src/database/migrations"
   }
 }
-
 ```
 
 #### Crie uma pasta ```./src/database```, e no seu index coloque o codigo abaixo:
@@ -62,7 +65,7 @@ createConnection();
 yarn typeorm migration:create -n CreateAppointments
 ```
 
-<a id="#ancora2"></a>
+<a id="ancora2"></a>
 # Example de migration: 
 
 ```
@@ -102,6 +105,7 @@ export class CreateAppointments1608663619421 implements MigrationInterface {
 }
 ```
 
+<a id="ancora3"></a>
 # Commandos de typeorm para migrations:
 
 <b>1. Executar migrations: </b>
@@ -120,4 +124,20 @@ yarn typeorm migration:revert
 
 ```
 yarn typeorm migration:show
+```
+
+<a id="ancora4"></a>
+# Configurando Models
+
+#### Em ```tsconfig.json```, habilite as configs descritas abaixo:
+
+```
+{
+  ...
+  "strictPropertyInitialization": false,  /* Enable strict checking of property initialization in classes. */
+  ...
+  "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
+  "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+  ...
+}
 ```
